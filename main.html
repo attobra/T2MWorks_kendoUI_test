@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Untitled</title>
+
+    <link
+      rel="stylesheet"
+      href="https://kendo.cdn.telerik.com/2021.1.224/styles/kendo.common.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://kendo.cdn.telerik.com/2021.1.224/styles/kendo.rtl.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://kendo.cdn.telerik.com/2021.1.224/styles/kendo.default.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://kendo.cdn.telerik.com/2021.1.224/styles/kendo.mobile.all.min.css"
+    />
+
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.224/js/angular.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.224/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.1.224/js/kendo.all.min.js"></script>
+  </head>
+  <body>
+    <div id="grid"></div>
+    <script>
+      var dataSource = new kendo.data.DataSource({
+        transport: {
+          read: {
+            type: "GET",
+            processData: false,
+            dataType: "xml",
+            url:
+              "https://api.t2mhosted.com/GetUsers/1c42da08-7281-471b-930d-8817f8537f46/1/null",
+            contentType: "text/xml",
+          },
+        },
+        schema: {
+          type: "xml",
+          data: "/ArrayOfUser/User",
+          model: {
+            fields: {
+              Name: "Name/text()",
+              SipAddress: "SipAddress/text()",
+              LineURI: "LineURI/text()",
+            },
+          },
+        },
+      });
+      dataSource.read();
+      $("#grid").kendoGrid({
+        columns: [
+          { field: "Name" },
+          { field: "SipAddress", filterable: false },
+          { field: "LineURI", title: "Phone number", filterable: false },
+        ],
+        dataSource: dataSource,
+        sortable: true,
+        filterable: true,
+      });
+    </script>
+  </body>
+</html>
